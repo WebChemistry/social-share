@@ -1,0 +1,11 @@
+{
+	"name": "webchemistry/social-share",
+	"require": {
+		"php": ">= 7.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"WebChemistry\\SocialShare\\": "src"
+		}
+	}
+}
