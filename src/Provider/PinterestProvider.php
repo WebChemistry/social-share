@@ -3,13 +3,14 @@
 namespace WebChemistry\SocialShare\Provider;
 
 use Nette\Http\Url;
+use WebChemistry\SocialShare\LinkShareResult;
 use WebChemistry\SocialShare\UrlToShare;
 use WebChemistry\SocialShare\SocialShareProviderInterface;
 
 final class PinterestProvider implements SocialShareProviderInterface
 {
 
-	public function getName(): string
+	public function getId(): string
 	{
 		return 'pinterest';
 	}
@@ -19,12 +20,16 @@ final class PinterestProvider implements SocialShareProviderInterface
 		return new Url('https://pinterest.com/pin/create/button');
 	}
 
-	public function share(UrlToShare $share): string
+	public function share(UrlToShare $share): LinkShareResult
 	{
-		return $this->createUrl()
-			->setQueryParameter('url', $share->getUrl())
-			->setQueryParameter('description', $share->getText())
-			->getAbsoluteUrl();
+		return new LinkShareResult(
+			$this->createUrl()
+				->setQueryParameter('url', $share->getUrl())
+				->setQueryParameter('description', $share->getText())
+				->getAbsoluteUrl(),
+			'Pinterest',
+			'pinterest'
+		);
 	}
 
 }

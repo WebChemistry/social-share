@@ -5,8 +5,8 @@ namespace WebChemistry\SocialShare;
 interface SocialShareProviderInterface
 {
 
-	public function getName(): string;
+	public function getId(): string;
 
-	public function share(UrlToShare $share): string;
+	public function share(UrlToShare $share): LinkShareResult;
 
 }

@@ -3,13 +3,14 @@
 namespace WebChemistry\SocialShare\Provider;
 
 use Nette\Http\Url;
+use WebChemistry\SocialShare\LinkShareResult;
 use WebChemistry\SocialShare\UrlToShare;
 use WebChemistry\SocialShare\SocialShareProviderInterface;
 
 final class LinkedInProvider implements SocialShareProviderInterface
 {
 
-	public function getName(): string
+	public function getId(): string
 	{
 		return 'linkedIn';
 	}
@@ -19,13 +20,17 @@ final class LinkedInProvider implements SocialShareProviderInterface
 		return new Url('https://www.linkedin.com/shareArticle?mini=true');
 	}
 
-	public function share(UrlToShare $share): string
+	public function share(UrlToShare $share): LinkShareResult
 	{
-		return $this->createUrl()
-			->setQueryParameter('url', $share->getUrl())
-			->setQueryParameter('summary', $share->getText())
-			->setQueryParameter('title', $share->getTitle())
-			->getAbsoluteUrl();
+		return new LinkShareResult(
+			$this->createUrl()
+				->setQueryParameter('url', $share->getUrl())
+				->setQueryParameter('summary', $share->getText())
+				->setQueryParameter('title', $share->getTitle())
+				->getAbsoluteUrl(),
+			'LinkedIn',
+			'linkedIn'
+		);
 	}
 
 }

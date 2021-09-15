@@ -3,13 +3,14 @@
 namespace WebChemistry\SocialShare\Provider;
 
 use Nette\Http\Url;
+use WebChemistry\SocialShare\LinkShareResult;
 use WebChemistry\SocialShare\UrlToShare;
 use WebChemistry\SocialShare\SocialShareProviderInterface;
 
 final class FacebookProvider implements SocialShareProviderInterface
 {
 
-	public function getName(): string
+	public function getId(): string
 	{
 		return 'facebook';
 	}
@@ -19,11 +20,15 @@ final class FacebookProvider implements SocialShareProviderInterface
 		return new Url('https://www.facebook.com/sharer/sharer.php');
 	}
 
-	public function share(UrlToShare $share): string
+	public function share(UrlToShare $share): LinkShareResult
 	{
-		return $this->createUrl()
-			->setQueryParameter('u', $share->getUrl())
-			->getAbsoluteUrl();
+		return new LinkShareResult(
+			$this->createUrl()
+				->setQueryParameter('u', $share->getUrl())
+				->getAbsoluteUrl(),
+			'Facebook',
+			'facebook'
+		);
 	}
 
 }

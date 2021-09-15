@@ -3,13 +3,14 @@
 namespace WebChemistry\SocialShare\Provider;
 
 use Nette\Http\Url;
+use WebChemistry\SocialShare\LinkShareResult;
 use WebChemistry\SocialShare\UrlToShare;
 use WebChemistry\SocialShare\SocialShareProviderInterface;
 
 final class TwitterProvider implements SocialShareProviderInterface
 {
 
-	public function getName(): string
+	public function getId(): string
 	{
 		return 'twitter';
 	}
@@ -19,12 +20,16 @@ final class TwitterProvider implements SocialShareProviderInterface
 		return new Url('https://twitter.com/intent/tweet');
 	}
 
-	public function share(UrlToShare $share): string
+	public function share(UrlToShare $share): LinkShareResult
 	{
-		return $this->createUrl()
-			->setQueryParameter('url', $share->getUrl())
-			->setQueryParameter('text', $share->getText())
-			->getAbsoluteUrl();
+		return new LinkShareResult(
+			$this->createUrl()
+				->setQueryParameter('url', $share->getUrl())
+				->setQueryParameter('text', $share->getText())
+				->getAbsoluteUrl(),
+			'Twitter',
+			'twitter'
+		);
 	}
 
 }
